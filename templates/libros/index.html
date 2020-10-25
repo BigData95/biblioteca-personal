@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Libreria Personal</title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    </head>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <body>
+        <!-- background="img/books.jpg"-->
+        <div class="primero">
+            <nav>
+                <a href="#about" class="buttonNav">About</a>
+                <a href="#register" class="buttonNav">Join!</a>
+                <a href="#LogIn" class="buttonNav">Log In</a>
+            </nav>
+            <div class="caption">
+                <span class="border">SCROLL DOWN</span>
+            </div>
+
+        </div>
+
+        <div class="about">
+            <p>About! <br><br>Esta es portal virtual de mi biblioteca personal.<br> Aqui encontraras todos los libros en
+                la biblioteca, su informacion basica<br>su estado
+                e incluso una breve resena o analisis si es que ya los he leido.
+            </p>
+        </div>
+
+
+        <div class="segundo">
+        </div>
+
+    </body>
+
+</html>

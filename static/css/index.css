@@ -1,0 +1,93 @@
+body,
+html {
+    height: 100%;
+}
+
+
+nav {
+    text-align: end;
+    padding: 2%;
+    /*background-image: url(img/IMG_20190320_180544468.jpg);
+    background-size: cover;
+    */
+    background-color: transparent;
+
+}
+
+a.buttonNav {
+    display: inline-block;
+    padding: 0.5em 3em;
+    border: 0.16em solid #FFFFFF;
+    margin: 0 0.3em 0.3em 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #FFFFFF;
+    text-align: center;
+    transition: all 0.15s;
+}
+
+a.buttonNav:hover {
+    color: #000000;
+    background-color: #FFFFFF;
+}
+
+@media all and (max-width:30em) {
+    a.buttonNav {
+        display: block;
+        margin: 0.4em auto;
+    }
+}
+
+.caption {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border {
+    background-color: #111;
+    color: #fff;
+    padding: 18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+
+.about {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    text-align: center;
+    font-size: 36px
+}
+
+.primero {
+    /* background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgb(255, 255, 255); /* Si no soporta rgba  */
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/books.jpg");
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.segundo {
+    width: 100%;
+    height: 100%;
+    background-image: url("../img/IMG_20190320_174930589.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
