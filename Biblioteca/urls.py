@@ -25,6 +25,9 @@ urlpatterns = [
     path('index/', libros_views.index, name="principal"),
     path('home/', libros_views.home, name="home"),
     # Users urls
-    path('users/login', users_views.login_view, name="login")
+    path('users/login', users_views.login_view, name="login"),
     #<form method="POST" action="{% url "login" %}"> </form>  Se usa el nombre del url
+    path('users/logout', users_views.logout_view, name="logout"),
+
+
 ]
