@@ -29,5 +29,10 @@ urlpatterns = [
     #<form method="POST" action="{% url "login" %}"> </form>  Se usa el nombre del url
     path('users/logout', users_views.logout_view, name="logout"),
 
+    path('users/me/profile', users_views.update_profile, name='update_profile'),
+
+
+
+
 
 ]

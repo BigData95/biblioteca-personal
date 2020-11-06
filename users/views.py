@@ -3,11 +3,19 @@ from django.shortcuts import render
 # Django
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+# Models
+from django.contrib.auth.models import User
 from users.models import Profile
+# Exceptions
+from django.db.utils import IntegrityError
+# Forms
+from users.forms import ProfileForm
 
 
+# Models
+
+# Sign in and sing up in one
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -20,12 +28,17 @@ def login_view(request):
                               {'error_create': 'Password does not match',
                                'anchor': 'signup'})
             else:
-                user = User.objects.create_user(username='username', password=password)
+                try:
+                    user = User.objects.create_user(username='username', password=password)
+                except IntegrityError:
+                    return render(request, 'users/login.html',
+                                  {'error_create': 'Username is already in use',
+                                   'anchor': 'signup'})
                 user.email = request.POST['email']
+                user.save()
                 profile = Profile(user=user)
                 profile.save()
                 return redirect('login')
-
         else:
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -43,3 +56,31 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+def update_profile(request):
+    profile = request.user.profile
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+            data = form.cleaned_data
+            profile.biography = data['biography']
+            profile.picture = data['picture']
+            profile.save()
+            return redirect('update_profile')
+            # para evitar que sea reenviado el formulario, tenemos que redireccionar
+    else:
+        form = ProfileForm()
+
+    """ update a user's profile view """
+    return render(
+        request=request,
+        template_name='users/update_profile.html',
+        context={
+            'profile': profile,
+            'user': request.user,
+            'form': form
+        }
+    )

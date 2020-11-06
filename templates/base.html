@@ -1,0 +1,15 @@
+{% include "baseStyle.html" %}
+
+{% block head %}
+    <title>
+    {% block title %}
+        Library|
+    {% endblock %}
+   </title>
+{% endblock %}
+
+{% block body %}
+    {% include "nav.html" %}
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
+{% endblock %}
