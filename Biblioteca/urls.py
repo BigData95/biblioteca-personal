@@ -24,15 +24,20 @@ urlpatterns = [
     # Libros urls
     path('index/', libros_views.index, name="principal"),
     path('home/', libros_views.home, name="home"),
+    path('books/new', libros_views.new_book, name="new_book"),
+    # path('books')
     # Users urls
     path('users/login', users_views.login_view, name="login"),
-    #<form method="POST" action="{% url "login" %}"> </form>  Se usa el nombre del url
+    # <form method="POST" action="{% url "login" %}"> </form>  Se usa el nombre del url
     path('users/logout', users_views.logout_view, name="logout"),
-
     path('users/me/profile', users_views.update_profile, name='update_profile'),
 
-
-
-
+    # from django.urls import path, include
+    # from django.contrib import admin
+    #
+    # urlpatterns = [
+    #     path('admin/', admin.site.urls),
+    #     path('', include('blog.urls')),
+    # ]
 
 ]
