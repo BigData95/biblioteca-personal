@@ -15,7 +15,7 @@
         {% if error_create %}
             <p class="alert alert-danger">{{ error_create }}</p>
         {% endif %}
-        <form action="{% url "login" %}" method="POST">
+        <form action="{% url "users:login" %}" method="POST">
             {% csrf_token %}
             <h1>Create Account</h1>
             <div class="social-container">
@@ -24,6 +24,7 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>or use your email for registration</span>
+{#            {{ form.as_p }}#}
             <input type="text" placeholder="Username" name="username"/>
             <input type="email" placeholder="Email" name="email"/>
             <input type="password" placeholder="Password" name="password"/>
@@ -35,7 +36,7 @@
         {% if error %}
             <p class="alert alert-danger">{{ error }}</p>
         {% endif %}
-        <form method="POST" action="{% url "login" %}">
+        <form method="POST" action="{% url "users:login" %}">
             {% csrf_token %}
             <h1>Sign in</h1>
             <div class="social-container">

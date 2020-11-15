@@ -13,31 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
-from Biblioteca import views as local_views
-from libros import views as libros_views
-from users import views as users_views
+from django.urls import path, include
+from Biblioteca import views as local_views, settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Libros urls
-    path('index/', libros_views.index, name="principal"),
-    path('home/', libros_views.home, name="home"),
-    path('books/new', libros_views.new_book, name="new_book"),
-    # path('books')
-    # Users urls
-    path('users/login', users_views.login_view, name="login"),
-    # <form method="POST" action="{% url "login" %}"> </form>  Se usa el nombre del url
-    path('users/logout', users_views.logout_view, name="logout"),
-    path('users/me/profile', users_views.update_profile, name='update_profile'),
+    path('', include(('libros.urls', "libros"), namespace="libros")),
+    path('', include(('users.urls', 'users'), namespace="users"))
 
-    # from django.urls import path, include
-    # from django.contrib import admin
-    #
-    # urlpatterns = [
-    #     path('admin/', admin.site.urls),
-    #     path('', include('blog.urls')),
-    # ]
 
-]
+]  #* static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

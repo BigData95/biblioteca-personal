@@ -1,0 +1,12 @@
+{% include "nav.html" %}
+<h1>Libros</h1>
+<ul>
+{% for book in book_list %}
+    <form method="POST" action="{% url "libros:delete" %}{{ book.isbn }}">
+        {% csrf_token %}
+        <li>{{ book }}</li>
+    <input type="submit" name="delete"/>
+   </form>
+{% endfor %}
+
+</ul>
