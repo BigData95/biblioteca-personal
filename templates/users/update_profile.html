@@ -2,51 +2,58 @@
 {% load static %}
 {% block head %}
     <title>
-    {% block title %}
-        {{ user.username }} Update profile
-    {% endblock %}
+        {% block title %}
+            {{ user.username }} Update profile
+        {% endblock %}
     </title>
 {% endblock %}
 
 
 {% block content %}
     <div class="container">
-        <div class="row justify-content-md-center">
+        <div class="row justify-content-md-center text-center">
             <div class="col-6 p-4" id="profile-box">
-                <form action=" {% url 'users:update_profile' %}" method="POST" enctype="multipart/form-data">
+                <form action=" {% url 'users:update_profile' %}"
+                      method="POST"
+                      enctype="multipart/form-data">
                     {% csrf_token %}
-                <div class="media">
-                    {% if profile.picture %}
-                        <img src="{{ profile.picture.url }}" class="rounded-circle" height="50" alt="ups">
-                    {% else %}
-                        <img src="{% static "img/default.png" %}" class="rounded-circle" height="50" alt="default"/>
-                    {% endif %}
-                {% for error in form.picture.errors %}
-                    <div class="alert alert-danger">
-                        <b> Picture: </b> {{ error }}
+                    <div class="media">
+                        {% if profile.picture %}
+                            <img src="{{ profile.picture.url }}"
+                                 class="rounded-circle mr-3"
+                                 height="50"
+                                 alt="ups">
+                        {% else %}
+                            <img src="{% static "img/default.png" %}"
+                                 class="rounded-circle"
+                                 height="50"
+                                 alt="default"/>
+                        {% endif %}
+                        {% for error in form.picture.errors %}
+                            <div class="alert alert-danger">
+                                <b> Picture: </b> {{ error }}
+                            </div>
+                        {% endfor %}
+                        <div class="media-body">
+                            <h5 class="mt-0">@{{ user.username }}</h5>
+                        </div>
+                        <p>
+                            <input class="mt-0" type="file" name="picture">
+                        </p>
                     </div>
-                {% endfor %}
-                <div class="media-body">
-                    <h5 class="ml-4">@{{ user.username }}</h5>
-                </div>
-                <p><input class="ml-4" type="file" name="picture"></p>
-                </div>
-                <div class="form-group">
-                    <label>Biography</label>
-                    <label>
+                    <div class="form-group">
+                        <label>Biography</label>
                         <textarea
                                 class="form-control {% if form.biography.errors %}is-invalid{% endif %}"
-                                name="biography">
-                                {% if form.errors %}{{ form.biography.value }}{% else %}{{ profile.biography }}{% endif %}
+                                name="biography">{% if form.errors %}{{ form.biography.value }}{% else %}{{ profile.biography }}{% endif %}
                         </textarea>
                         <div class="invalid-feedback">
                             {% for error in form.biography.errors %}
                                 {{ error }}
                             {% endfor %}
                         </div>
-                    </label>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block mt-5">Update Info</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block mt-5">Update Info</button>
                 </form>
             </div>
         </div>

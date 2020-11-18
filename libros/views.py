@@ -1,9 +1,10 @@
 # Django
 from django.shortcuts import render, redirect
-from django.views.generic import DetailView, TemplateView, ListView
+from django.views.generic import ListView, DetailView, CreateView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 
 from libros.forms import BookForm, BookForm2
 from libros.models import Books
@@ -12,7 +13,6 @@ from libros.models import Books
 @login_required
 def home(request):
     books = Books.objects.all()
-    print(books)
     return render(request, 'libros/home.html',
                   context={
                       'user': request.user,
@@ -20,9 +20,28 @@ def home(request):
                   })
 
 
+# # CreateVIew most use a ModelForm (or something that exposes the exact same API as a ModelForm)
+# class CreateNewBookView(CreateView, LoginRequiredMixin):
+#     """Create new book"""
+#     template_name = "libros/new_book.html"
+#     form_class = BookForm2
+#     success_url = reverse_lazy("libros:libros")
+#
+#     def get_context_data(self, **kwargs):
+#         """Add user and profile to context"""
+#         context = super().get_context_data(**kwargs)
+#         context['user'] = self.request.user.id
+#         context['profile'] = self.request.user.profile
+#         return context
+#
+#     def form_valid(self, form):
+#         form.save(self.request)
+#         return super().form_valid(form)
+
+
+
 @login_required
 def new_book(request):
-    """Create new book !FOR ALL USERS"""
     if request.method == "POST":
         form = BookForm2(request.POST)
         if form.is_valid():
@@ -58,34 +77,26 @@ def new_book(request):
                   )
 
 
+@login_required
+def delete(request):
+    if request.method == "POST":
+        Books.objects.filter(isbn=request.POST['delete_book']).delete()
+        return render(request, "libros/home.html")
+    redirect('libros:home')
+
+
 class BookList(LoginRequiredMixin, ListView):
     model = Books
-    ordering = ('-created',)
-    context_object_name = 'book_list'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['book_list'] = Books.objects.all()
-    #     return context
-
-    # template_view = 'libros/libros.html'
-    # slug_field = 'username'
-    # slug_url_kwarg = 'username'  # EL nombre que le pusimos en las urls
-    # queryset = User.objects.all()
-    # context_object_name = 'user'
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     user = self.get_object()
-    #     context['books'] = Books.objects.filter(user=user).order_by('-created')
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['book_list'] = Books.objects.filter(user_id=self.request.user.id).order_by('-created')
+        return context
 
 
 #
-# class UserDatailView(TemplateView):
 
-def delete(request):
-    if request.method == "POST":
-        print(request.post)
-
-    redirect('libros:home')
+class BookDetailView(DetailView, LoginRequiredMixin):
+    template_name = "libros/<str:titulo>/detail.html"
+    # queryset = Books.objects.filter(request.user.id)
+    pass

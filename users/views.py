@@ -3,8 +3,11 @@ from django.shortcuts import render
 # Django
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from users.forms import ProfileForm, SignupForm
+from django.views.generic import DetailView
+from django.contrib.auth.models import User
 
 
 # Models
@@ -20,23 +23,6 @@ def login_view(request):
             if form.is_valid():
                 form.save()
                 return redirect('users:login')
-            # password_confirmation = request.POST['password_confirmation']
-            # if password != password_confirmation:
-            #     return render(request, 'users/login.html',
-            #                   {'error_create': 'Password does not match',
-            #                    'anchor': 'signup'})
-            # else:
-            #     try:
-            #         user = User.objects.create_user(username='username', password=password)
-            #     except IntegrityError:
-            #         return render(request, 'users/login.html',
-            #                       {'error_create': 'Username is already in use',
-            #                        'anchor': 'signup'})
-            #     user.email = request.POST['email']
-            #     user.save()
-            #     profile = Profile(user=user)
-            #     profile.save()
-            #     return redirect('login')
         else:
             user = authenticate(request, username=username, password=password)
             if user is not None:
@@ -53,7 +39,6 @@ def login_view(request):
         template_name='users/login.html',
         context={'form': form}
     )
-
 
 
 # def signup(request):
@@ -92,3 +77,9 @@ def update_profile(request):
             'form': form
         }
     )
+
+
+class UserDetailView(DetailView, LoginRequiredMixin):
+    template_name = 'user/detail.html'
+    slug_field = "username"
+    slug_url_kwarg = "username"  # Se tiene que llamar igual que en la url <str:slug_url_kwarg>

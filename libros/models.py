@@ -15,12 +15,11 @@ class Author(models.Model):
 
 
 class Books(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # OneToMany ralation
     profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
     # authors = models.ManyToManyField(Author)
     isbn = models.IntegerField(unique=True, primary_key=True, blank=False)
     titulo = models.CharField(max_length=50, blank=False)
-    # Autor = models.ForeignKey()
     edicion = models.IntegerField(blank=True)
 
     created = models.DateTimeField(auto_now_add=True)

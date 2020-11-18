@@ -2,10 +2,10 @@
 <h1>Libros</h1>
 <ul>
 {% for book in book_list %}
-    <form method="POST" action="{% url "libros:delete" %}{{ book.isbn }}">
+    <form method="POST" action="{% url "libros:delete" %}">
         {% csrf_token %}
         <li>{{ book }}</li>
-    <input type="submit" name="delete"/>
+    <button type="submit" name="delete_book" value="{{ book.isbn }}">Delete Book</button>
    </form>
 {% endfor %}
 

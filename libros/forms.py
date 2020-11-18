@@ -36,5 +36,3 @@ class BookForm2(forms.Form):
                                     edicion=data['edicion']
                                     )
         book.save()
-        # profile = Profile(book=book)
-        # profile.save()
