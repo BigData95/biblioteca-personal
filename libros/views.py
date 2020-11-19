@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 
-from libros.forms import BookForm, BookForm2
+from libros.forms import BookForm, BookForm2, EditorialsForm, AuthoresForm
 from libros.models import Books
 
 
@@ -20,23 +20,24 @@ def home(request):
                   })
 
 
-# # CreateVIew most use a ModelForm (or something that exposes the exact same API as a ModelForm)
-# class CreateNewBookView(CreateView, LoginRequiredMixin):
-#     """Create new book"""
-#     template_name = "libros/new_book.html"
-#     form_class = BookForm2
-#     success_url = reverse_lazy("libros:libros")
-#
-#     def get_context_data(self, **kwargs):
-#         """Add user and profile to context"""
-#         context = super().get_context_data(**kwargs)
-#         context['user'] = self.request.user.id
-#         context['profile'] = self.request.user.profile
-#         return context
-#
-#     def form_valid(self, form):
-#         form.save(self.request)
-#         return super().form_valid(form)
+class EditorialCreateView(CreateView, LoginRequiredMixin):
+    template_name = "libros/editorials/new.html"
+    form_class = EditorialsForm
+    success_url = reverse_lazy("libros:home")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class AuthoresCreateView(CreateView, LoginRequiredMixin):
+    template_name = "libros/authores/new.html"
+    form_class = AuthoresForm
+    success_url = reverse_lazy("libros:home")
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
 
@@ -45,24 +46,6 @@ def new_book(request):
     if request.method == "POST":
         form = BookForm2(request.POST)
         if form.is_valid():
-            # data = form.cleaned_data
-            # libro = Books.objects.create(user_id=request.user.pk,
-            #                  profile_id=request.user.profile.pk,
-            #                  isbn=data['isbn'],
-            #                  titulo=data['titulo'],
-            #                  edicion=data['edicion']
-            #                  )
-            # data['profile.id'] = request.user.profile.pk
-            # libro = Books.objects.create(isbn=data['isbn'],
-            #                              titulo=data['titulo'],
-            #                              edicion=['edicion'],
-            #                              user=user,
-            #                              profile=request.user.profile.pk
-            #                              )
-            # libro['isbn'] = data['isbn']
-            # libro['titulo'] = data['titulo']
-            # libro['edicion'] = data['edicion']
-            # libro.save()
             form.save(request)
             return redirect('libros:home')
     else:

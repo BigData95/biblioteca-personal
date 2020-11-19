@@ -9,7 +9,7 @@ class Profile(models.Model):
 
     biography = models.TextField(blank=True)
     picture = models.ImageField(
-        upload_to="users/pictures",
+        upload_to="users/",
         blank=True,
         null=True
     )

@@ -128,3 +128,6 @@ STATICFILES_FINDERS = [
 
 # El decorador @login_required utiliza esta url
 LOGIN_URL = '/users/login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (BASE_DIR / "media")

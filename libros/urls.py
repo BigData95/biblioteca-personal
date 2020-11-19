@@ -1,5 +1,8 @@
 """Libros Url"""
+from django.conf.urls.static import static
 from django.urls import path
+
+from Biblioteca import settings
 from libros import views
 from django.views.generic import TemplateView
 
@@ -15,6 +18,14 @@ urlpatterns = [
     path(route='books/new',
          view=views.new_book,
          name="new_book"
+         ),
+    path(route="books/editorials/new",
+         view=views.EditorialCreateView.as_view(),
+         name="new_editorial"
+         ),
+    path(route="books/authores/new",
+         view=views.AuthoresCreateView.as_view(),
+         name="new_author"
          ),
     # path(route="books/new",
     #      view=views.CreateNewBookView.as_view(),
@@ -33,4 +44,4 @@ urlpatterns = [
          name="datail"
          )
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
