@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from libros.fields import CountryField
 
+# First elemnt is the actual value to be stored and second is the human-readble name
 GENRE = [
     ('Fantasy', 'Fantasy'),
     ('Sci-Fi', 'Sci-Fi'),
@@ -47,17 +48,14 @@ class Books(models.Model):
 
     isbn = models.IntegerField(unique=True, primary_key=True, blank=False)
     titulo = models.CharField(max_length=50, blank=False)
-    portada = models.ImageField(upload_to="books/", blank=True)
-    # author = models.ManyToManyField('Author')   # Solo una tabla es necesaria que tenga esta relacion
+    portada = models.ImageField(upload_to="books/", blank=True, null=True)
     edicion = models.IntegerField(blank=True)
 
     editorial = models.ForeignKey(Editorials, on_delete=models.CASCADE, blank=True)
     year_of_publication = models.IntegerField(blank=True)
 
-    # quotes = models.ManyToManyField('Quotes', on_delete=models.CASCADE)
     genre = models.CharField(choices=CATEGORY, default='Other', max_length=20)
     category = models.CharField(choices=CATEGORY, default='Novel', max_length=20)
-    # reviews = models.ManyToManyField('Reviews', on_delete=models.CASCADE)
     status = models.CharField(choices=STATUS, default='to read', max_length=20)
 
     created = models.DateTimeField(auto_now_add=True)
@@ -68,7 +66,6 @@ class Books(models.Model):
 
 
 class Author(models.Model):
-    # First elemnt is the actual value to be stored and second is the human-readble name
     GENDER = [('Meele', 'Man'), ('Feemele', 'Woman')]
     name = models.CharField(unique=True, max_length=50)
     picture = models.ImageField(upload_to="authores/", blank=True)

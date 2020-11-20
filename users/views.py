@@ -9,30 +9,22 @@ from users.forms import ProfileForm, SignupForm
 from django.views.generic import DetailView
 from django.contrib.auth.models import User
 
+from django.contrib.auth.views import LoginView, LogoutView
 
-# Models
+
+class UserLoginView(LoginView):
+    """Login view"""
+    template_name = "users/login.html"
+
 
 # Sign in and sing up in one
-def login_view(request):
+def signup(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        # Quiere decir que es un sign-up
         if request.POST.get('email'):
             form = SignupForm(request.POST)
             if form.is_valid():
                 form.save()
                 return redirect('users:login')
-        else:
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                # Home es el nombre de nuestra url
-                return redirect('libros:home')
-            else:
-                return render(request,
-                              'users/login.html',
-                              {'error': 'Invalid username or password'})
     form = SignupForm()
     return render(
         request=request,
@@ -41,14 +33,8 @@ def login_view(request):
     )
 
 
-# def signup(request):
-#     if request.method == "POST":
-
-
-@login_required
-def logout_view(request):
-    logout(request)
-    return redirect('users:login')
+class UserLogOutView(LogoutView, LoginRequiredMixin):
+    template_name = 'users/login.html'
 
 
 @login_required
@@ -57,13 +43,11 @@ def update_profile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
             data = form.cleaned_data
             profile.biography = data['biography']
             profile.picture = data['picture']
             profile.save()
             return redirect('users:update_profile')
-            # para evitar que sea reenviado el formulario, tenemos que redireccionar
     else:
         form = ProfileForm()
 

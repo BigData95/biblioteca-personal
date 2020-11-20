@@ -18,29 +18,29 @@
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="media">
-                        {% if profile.picture %}
-                            <img src="{{ profile.picture.url }}"
-                                 class="rounded-circle mr-3"
-                                 height="50"
-                                 alt="ups">
-                        {% else %}
-                            <img src="{% static "img/default.png" %}"
-                                 class="rounded-circle"
-                                 height="50"
-                                 alt="default"/>
-                        {% endif %}
-                        {% for error in form.picture.errors %}
-                            <div class="alert alert-danger">
-                                <b> Picture: </b> {{ error }}
-                            </div>
-                        {% endfor %}
                         <div class="media-body">
+                            {% if profile.picture %}
+                                <img src="{{ profile.picture.url }}"
+                                     class="rounded-circle mr-3"
+                                     height="60"
+                                     alt="ups">
+                            {% else %}
+                                <img src="{% static "img/default.png" %}"
+                                     class="rounded-circle"
+                                     height="60"
+                                     alt="default"/>
+                            {% endif %}
+                            {% for error in form.picture.errors %}
+                                <div class="alert alert-danger">
+                                    <b> Picture: </b> {{ error }}
+                                </div>
+                            {% endfor %}
                             <h5 class="mt-0">@{{ user.username }}</h5>
                         </div>
-                        <p>
-                            <input class="mt-0" type="file" name="picture">
-                        </p>
                     </div>
+                    <p>
+                        <input class="mt-0" type="file" name="picture">
+                    </p>
                     <div class="form-group">
                         <label>Biography</label>
                         <textarea

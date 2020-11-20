@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>
+        {% block title %}
+            {{ user.username }}| Add book
+        {% endblock %}
+    </title>
+{% endblock %}
+
+
+{% block content %}
+    <form method="post" enctype="multipart/form-data" >{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Save">
+    </form>
+{#    <div class="container">#}
+{#        <div class="row justify-content-md-center">#}
+{#            <div class="col-6 p-4">#}
+{#                <form method="POST" action="{% url "libros:new_book" %}">#}
+{#                    {% csrf_token %}#}
+{##}
+{#                    <div class="form-row">#}
+{#                        <div class="form-group">#}
+{#                            <label>ISBN#}
+{#                            <input#}
+{#                                    name="isbn"#}
+{#                                    type="number"#}
+{#                                    class="form-control {% if form.isb.errors %}is-invalid{% endif %}"#}
+{#                                    placeholder="ISBN"/>#}
+{#                           </label>#}
+{#                        </div>#}
+{#                        <div class="invalid-feedback">#}
+{#                            {% for error in form.isb.errors %}{{ error }}{% endfor %}#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group ">#}
+{#                        <label>Titulo#}
+{#                        <input#}
+{#                                name="titulo"#}
+{#                                type="text"#}
+{#                                class="form-control  {% if form.titulo.errors %}is-invalid{% endif %} "#}
+{#                                placeholder="Titulo"/>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                    <div class="invalid-feedback">#}
+{#                        {% for error in form.titulo.errors %}{{ error }}{% endfor %}#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label>#}
+{#                            Author#}
+{#                            <select class="form-control" aria-labelledby="dropdownMenuButton">#}
+{#                                {% for author in form.author.field.queryset %}#}
+{#                                    <option class="dropdown-item" value="{{ author.id }}">{{ author }}</option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                        </label>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-row">#}
+{#                        <div class="form-group">#}
+{#                            <label>Edicion#}
+{#                                <input name="edicion" type="number" class="form-control" placeholder="Edicion">#}
+{#                            </label>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label>#}
+{#                                Editorial#}
+{#                                <select class="form-control" aria-labelledby="dropdownMenuButton">#}
+{#                                    {% for editorial in form.editorial.field.queryset %}#}
+{#                                        <option class="dropdown-item"#}
+{#                                                value="{{ editorial.id }}">{{ editorial }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </label>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-row">#}
+{#                        <div class="form-group">#}
+{#                            <label>#}
+{#                                Genre#}
+{#                                <select class="form-control" aria-labelledby="dropdownMenuButton">#}
+{#                                    {% for save,genre in form.fields.genre.choices %}#}
+{#                                        <option class="dropdown-item" value="{{ save }}">{{ genre }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </label>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label>#}
+{#                                Category#}
+{#                                <select class="form-control" aria-labelledby="dropdownMenuButton">#}
+{#                                    {% for save,category in form.category.field.choices %}#}
+{#                                        <option class="dropdown-item" value="{{ save }}">{{ category }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </label>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-row">#}
+{#                        <div class="form-group">#}
+{#                            <label>#}
+{#                                year of publication#}
+{#                                <input#}
+{#                                        type="number"#}
+{#                                        class="form-control {% if form.year_of_publicationo.errors %}is-invalid{% endif %}  "#}
+{#                                        name="year_of_publication"#}
+{#                                        placeholder="year of publication"/>#}
+{#                            </label>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label>#}
+{#                                Status#}
+{#                                <select class="form-control" aria-labelledby="dropdownMenuButton">#}
+{#                                    {% for save,stat in form.status.field.choices %}#}
+{#                                        <option class="dropdown-item" value="{{ save }}">{{ stat }}</option>#}
+{#                                    {% endfor %}#}
+{#                                </select>#}
+{#                            </label>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label>#}
+{#                            Portada#}
+{#                            <input#}
+{#                                    class="mt-0 {% if form.isb.errors %}is-invalid{% endif %}"#}
+{#                                    type="file"#}
+{#                                    name="portada"/>#}
+{#                        </label>#}
+{#                    </div>#}
+{#                    <button type="submit" class="btn btn-primary btn-block mt-3">Add</button>#}
+{##}
+{#                </form>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}

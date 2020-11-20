@@ -1,0 +1,2 @@
+sentry-sdk
+Django~=3.1.2

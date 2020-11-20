@@ -1,0 +1,93 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/libros/books_list.css' %}">
+{% include "base.html" %}
+
+{% block head %}
+    <title>
+        {% block title %}
+            {{ user.username }} books
+        {% endblock %}
+    </title>
+{% endblock %}
+
+
+{% block content %}
+    <div class="main-container" id="main-container">
+        <div class="page-container">
+            <section class="book_list">
+
+                <div class="grid-shuffle">
+                    <ul class="row flex">
+                        {% for book in book_list %}
+                            <form method="POST" action="{% url "libros:delete" %}">
+                                {% csrf_token %}
+                                <li class="book-item small-12 medium-6 columns" data-groups='["classic"]'
+                                    data-date-created='1937' data-title='Of Mice and Men' data-color='#fcc278'>
+                                    <div class="bk-img">
+                                        <div class="bk-wrapper">
+                                            <div class="bk-book bk-bookdefault">
+                                                <div class="bk-front">
+                                                    {% if book.portada %}
+                                                    <div class="bk-cover"
+                                                         style="background-image: url('{{ book.portada.url }}')">
+                                                    </div>
+                                                    {% else %}
+                                                        <div class="bk-cover"
+                                                             style="background-image: url('{% static 'img/default_book.png' %}')">
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="bk-back"></div>
+                                                <div class="bk-left"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-details">
+                                        <h3 class="book-item_title">{{ book.titulo }}</h3>
+                                        <p class="author">{{ book.author }} &bull; {{ book.year_of_publication }}</p>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus nisi,
+                                            eget
+                                            pulvinar in, molestie et arcu.</p>
+                                        <a href="#" class="button ">Details</a>
+                                        <button type="submit" name="delete_book" value="{{ book.isbn }}">Delete Book
+                                    </div>
+
+                                </li>
+                            </form>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+            </section>
+        </div>
+
+    </div>
+
+
+
+
+{% endblock %}
+
+
+
+
+{##}
+{#<h1>Libros</h1>#}
+{#<ul>#}
+{#    {% for book in book_list %}#}
+{#        <form method="POST" action="{% url "libros:delete" %}">#}
+{#            {% csrf_token %}#}
+{#            {% if book.portada %}#}
+{#                <img src="{{ book.portada.url }}" alt="picture" height="45">#}
+{#            {% else %}#}
+{#                <img src="{% static 'img/default_book.png' %}" height="45" alt="Picture">#}
+{#            {% endif %}#}
+{#            <li>{{ book }}</li>#}
+{#            <button type="submit" name="delete_book" value="{{ book.isbn }}">Delete Book</button>#}
+{#        </form>#}
+{#    {% endfor %}#}
+{##}
+{#</ul>#}
+
+
+

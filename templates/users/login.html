@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/log.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/log.css' %}">
 {% include "baseStyle.html" %}
 
 {% if anchor %}
@@ -15,7 +15,7 @@
         {% if error_create %}
             <p class="alert alert-danger">{{ error_create }}</p>
         {% endif %}
-        <form action="{% url "users:login" %}" method="POST">
+        <form action="{% url "users:signup" %}" method="POST">
             {% csrf_token %}
             <h1>Create Account</h1>
             <div class="social-container">
@@ -24,12 +24,13 @@
                 <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
             </div>
             <span>or use your email for registration</span>
-{#            {{ form.as_p }}#}
             <input type="text" placeholder="Username" name="username"/>
             <input type="email" placeholder="Email" name="email"/>
             <input type="password" placeholder="Password" name="password"/>
             <input type="password" placeholder="Password confirmation" name="password_confirmation" />
-            <button>Sign Up</button>
+            <button>
+                    Sign Up
+            </button>
         </form>
     </div>
     <div class="form-container sign-in-container" id="sign-in">
