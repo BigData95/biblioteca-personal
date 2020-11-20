@@ -34,6 +34,29 @@ STATUS = [
 ]
 
 
+class Author(models.Model):
+    GENDER = [('Meele', 'Man'), ('Feemele', 'Woman')]
+    name = models.CharField(unique=True, max_length=50)
+    picture = models.ImageField(upload_to="authores/", blank=True)
+    country = CountryField(default='UN')
+    biography = models.TextField(blank=True)
+    gender = models.CharField(max_length=7, choices=GENDER)
+    birth_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Reviews(models.Model):
+    Author = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.TextField()
+
+
+class Quotes(models.Model):
+    Author = models.ForeignKey(User, on_delete=models.CASCADE)
+    quote = models.TextField()
+
+
 class Editorials(models.Model):
     name = models.CharField(unique=True, max_length=50)
     country = CountryField(default='UN')
@@ -48,6 +71,7 @@ class Books(models.Model):
 
     isbn = models.IntegerField(unique=True, primary_key=True, blank=False)
     titulo = models.CharField(max_length=50, blank=False)
+    author = models.ManyToManyField(Author)
     portada = models.ImageField(upload_to="books/", blank=True, null=True)
     edicion = models.IntegerField(blank=True)
 
@@ -58,34 +82,11 @@ class Books(models.Model):
     category = models.CharField(choices=CATEGORY, default='Novel', max_length=20)
     status = models.CharField(choices=STATUS, default='to read', max_length=20)
 
+    reviews = models.ManyToManyField(Reviews, blank=True)
+    quotes = models.ManyToManyField(Quotes, blank=True)
+
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Titulo: {self.titulo}"
-
-
-class Author(models.Model):
-    GENDER = [('Meele', 'Man'), ('Feemele', 'Woman')]
-    name = models.CharField(unique=True, max_length=50)
-    picture = models.ImageField(upload_to="authores/", blank=True)
-    country = CountryField(default='UN')
-    books = models.ManyToManyField(Books, blank=True)
-    biography = models.TextField(blank=True)
-    gender = models.CharField(max_length=7, choices=GENDER)
-    birth_date = models.DateField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Reviews(models.Model):
-    Book = models.ManyToManyField(Books, blank=True)
-    Author = models.ForeignKey(User, on_delete=models.CASCADE)
-    review = models.TextField()
-
-
-class Quotes(models.Model):
-    Book = models.ManyToManyField(Books, blank=True)
-    Author = models.ForeignKey(User, on_delete=models.CASCADE)
-    quote = models.TextField()

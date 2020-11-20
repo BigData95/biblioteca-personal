@@ -1,7 +1,5 @@
 # Django
 from django import forms
-
-from django.core.exceptions import ValidationError
 # Models
 from libros.models import Books, Author, Editorials
 
@@ -25,6 +23,7 @@ class BookForm(forms.ModelForm):
         model = Books
         fields = {'isbn',
                   'titulo',
+                  'author',
                   'portada',
                   'edicion',
                   'editorial',
@@ -32,8 +31,15 @@ class BookForm(forms.ModelForm):
                   'genre',
                   'category',
                   'status',
+                  # 'reviews',
+                  # 'quotes'
                   }
 
+    # def save(self):
+    #     instance = forms.ModelForm.save(self)
+    #     Author.books.add(BookForm)
+    #     return instance
+    #
 
 # class BookForm2(forms.Form):
 #     isbn = forms.IntegerField()

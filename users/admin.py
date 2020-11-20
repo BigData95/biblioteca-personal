@@ -3,6 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 # Models
 from users.models import Profile
+from libros.models import Books
 from django.contrib.auth.models import User
 
 
@@ -14,9 +15,16 @@ from django.contrib.auth.models import User
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('pk', 'user', 'picture')
+
     # list_editable = ()  Parametros que se pueden editar desde el admin
     search_fields = ('user__email', 'user__first_name')
     list_filter = ('created', 'modified', 'user__is_active', 'user__is_staff')
+
+
+@admin.register(Books)
+class BooksAdmin(admin.ModelAdmin):
+    list_display = ('isbn', 'titulo')
+    search_fields = ('isbn',)
 
 
 class ProfileInline(admin.StackedInline):
@@ -26,11 +34,17 @@ class ProfileInline(admin.StackedInline):
     verbose_name_plural = "profiles"
 
 
+class BooksInline(admin.StackedInline):
+    model = Books
+    can_delete = False
+    verbose_name = "libros"
+
+
 class UserAdmin(BaseUserAdmin):
     """
     Add Profile admin to base user admin
     """
-    inlines = (ProfileInline,)
+    inlines = (ProfileInline, BooksInline,)
 
 
 admin.site.unregister(User)
