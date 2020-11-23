@@ -2,8 +2,15 @@
 from django.conf.urls.static import static
 from django.urls import path
 from Biblioteca import settings
-from libros.views import create_views, delete_views, detail_views, general, listing_views
 from django.views.generic import TemplateView
+from libros.views import (
+    create_views,
+    delete_views,
+    detail_views,
+    general,
+    listing_views,
+    update_views
+)
 
 urlpatterns = [
                   path('index/',
@@ -14,10 +21,6 @@ urlpatterns = [
                        view=general.home,
                        name="home"
                        ),
-                  # path(route='books/new',
-                  #      view=create_views.new_book,
-                  #      name="new_book"
-                  #      ),
                   path(route="books/new",
                        view=create_views.BooksCreateView.as_view(),
                        name="new_book"
@@ -37,10 +40,13 @@ urlpatterns = [
                   path(route="libros/<str:username>/",
                        view=listing_views.BookList.as_view(),
                        name="libros"),
-
-                  path(route="libros/detail/<str:username>",
-                       view=detail_views.BookDetailView.as_view(),
-                       name="datail"
+                  # path(route="libros/detail/<slug:isbn>",
+                  #      view=detail_views.BookDetailView.as_view(),
+                  #      name="detail"
+                  #      ),
+                  path(route="libros/detail/<slug:isbn>",
+                       view=update_views.LibroUpdateView.as_view(),
+                       name="detail"
                        )
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

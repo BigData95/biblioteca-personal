@@ -1,12 +1,17 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
-from libros.models import Author
+from libros.models import Author, Books
+from libros.views.update_views import LibroUpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class BookDetailView(DetailView, LoginRequiredMixin):
-    template_name = "libros/<str:titulo>/detail.html"
-    # queryset = Books.objects.filter(request.user.id)
-    pass
+    model = Books
+    template_name = "libros/books/detail.html"
+    queryset = Books.objects.all()
+    slug_field = 'isbn'
+    slug_url_kwarg = 'isbn'
+    context_object_name = "book"
 
 
 class AuthoreseDetailView(DetailView, LoginRequiredMixin):

@@ -47,14 +47,11 @@ class Author(models.Model):
         return self.name
 
 
-class Reviews(models.Model):
-    Author = models.ForeignKey(User, on_delete=models.CASCADE)
-    review = models.TextField()
+# class Reviews(models.Model):
+#     Author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     review = models.TextField()
 
 
-class Quotes(models.Model):
-    Author = models.ForeignKey(User, on_delete=models.CASCADE)
-    quote = models.TextField()
 
 
 class Editorials(models.Model):
@@ -82,11 +79,19 @@ class Books(models.Model):
     category = models.CharField(choices=CATEGORY, default='Novel', max_length=20)
     status = models.CharField(choices=STATUS, default='to read', max_length=20)
 
-    reviews = models.ManyToManyField(Reviews, blank=True)
-    quotes = models.ManyToManyField(Quotes, blank=True)
+    # reviews = models.ForeignKey(Reviews, on_delete=models.CASCADE, blank=True, null=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
+    review = models.TextField(blank=True, null=True)
+    # quotes = models.ForeignKey(Quotes, on_delete=models.CASCADE, blank=True, null=True)
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"Titulo: {self.titulo}"
+
+
+class Quotes(models.Model):
+    # Author = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    quote = models.TextField()

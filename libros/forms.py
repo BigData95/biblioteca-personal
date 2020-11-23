@@ -31,6 +31,7 @@ class BookForm(forms.ModelForm):
                   'genre',
                   'category',
                   'status',
+                  # 'quotes',
                   # 'reviews',
                   # 'quotes'
                   }
@@ -40,6 +41,7 @@ class BookForm(forms.ModelForm):
     #     Author.books.add(BookForm)
     #     return instance
     #
+
 
 # class BookForm2(forms.Form):
 #     isbn = forms.IntegerField()

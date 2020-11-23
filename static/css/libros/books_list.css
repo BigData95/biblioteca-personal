@@ -4,16 +4,10 @@
 
 }
 
-.row {
-    max-width: 500px;
-}
-
-
-p, a, li {
+p, a, .book-item {
     font-family: 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 1em;
 }
-
 
 
 h2,
@@ -65,14 +59,11 @@ a.button {
     background-color: rgba(49, 49, 49, 0.5);
 }
 
-/*#grid {*/
-/*    margin-bottom: 60px;*/
-/*}*/
 
 .book-item {
     /*background:rgba(210, 214, 213, 0.5);*/
     margin: 15px 0;
-    padding: 15px;
+    padding-top: 15px;
     list-style-type: none;
 }
 
@@ -100,20 +91,20 @@ a.button {
     opacity: 1;
 }
 
-/*.book-item .item-img {*/
-/*    display: inline-block;*/
-/*    float: left;*/
-/*    padding-right: 30px;*/
-/*}*/
-
-/*.book-item .item-img img {*/
-/*    box-shadow: 0 0 0 0 transparent;*/
-/*    transition: all 250ms ease-out;*/
-/*}*/
-
-.book-item .item-details {
+.book-item .item-img {
+    display: inline-block;
+    float: left;
     padding-right: 30px;
 }
+
+.book-item .item-img img {
+    box-shadow: 0 0 0 0 transparent;
+    transition: all 250ms ease-out;
+}
+
+/*.book-item .item-details {*/
+/*    padding-right: 30px;*/
+/*}*/
 
 .book-item h3 {
     white-space: nowrap;
@@ -124,9 +115,9 @@ a.button {
 .book-item p:not(.author) {
     display: block;
     display: -webkit-box;
-    height: 63px;
+    height: 10vh;
     /* Fallback for non-webkit */
-    font-size: 15px;
+    font-size: 1em;
     line-height: 1.4;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -176,8 +167,8 @@ a.button {
 .bk-img .bk-front {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
-    -webkit-transform-origin: 0% 50%;
-    transform-origin: 0% 50%;
+    -webkit-transform-origin: 0 50%;
+    transform-origin: 0 50%;
     -webkit-transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
     -webkit-transform: translate3d(0, 0, 20px);
@@ -195,14 +186,14 @@ a.button {
     box-shadow: inset 4px 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/*.bk-img .bk-front:after {*/
-/*    content: '';*/
-/*    position: absolute;*/
-/*    top: 1px;*/
-/*    bottom: 1px;*/
-/*    left: -1px;*/
-/*    width: 1px;*/
-/*}*/
+.bk-img .bk-front:after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    left: -1px;
+    width: 1px;
+}
 
 .bk-img .bk-front,
 .bk-img .bk-back,
@@ -255,8 +246,6 @@ a.button {
 }
 
 .bk-img .bk-cover {
-    /*background-image: url(../images/1.png);
-	*/
     background-repeat: no-repeat;
     background-position: 10px 40px;
 }
@@ -277,9 +266,19 @@ a.button {
     background-position: top left !important;
 }
 
-/*.bk-img .bk-front>div,*/
-/*.bk-img .bk-left {*/
-/*    background-color: #219e9a;*/
-/*}*/
 
+.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 
+}
+.book-item:first-child{
+    padding-left: 40px;
+}
+
+.book-item{
+    flex-grow: 4;
+    width:32vw;
+
+}

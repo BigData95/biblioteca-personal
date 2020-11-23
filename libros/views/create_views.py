@@ -1,8 +1,6 @@
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from libros.forms import EditorialsForm, AuthoresForm, BookForm
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
 
@@ -20,10 +18,6 @@ class AuthoresCreateView(CreateView, LoginRequiredMixin):
     template_name = "libros/authores/new.html"
     form_class = AuthoresForm
     success_url = reverse_lazy("libros:home")
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
 
 
 class BooksCreateView(CreateView, LoginRequiredMixin):
@@ -55,3 +49,6 @@ class BooksCreateView(CreateView, LoginRequiredMixin):
 #                       'profile': request.user.profile
 #                   }
 #                   )
+#
+# class QuoteCreateView(CreateView, LoginRequiredMixin):
+#     form_class = QuotesForm
