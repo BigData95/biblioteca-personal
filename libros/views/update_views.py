@@ -1,7 +1,7 @@
 from django.views.generic import UpdateView
 from libros.models import Books, Quotes
 from django.urls import reverse_lazy
-
+from libros.forms import QuotesForm
 from django.shortcuts import render, redirect
 
 """ Update views for quotes and revires showing detail books """
@@ -18,28 +18,23 @@ class LibroUpdateView(UpdateView):
         "description",
         "review",
     ]
-    success_url = reverse_lazy("libros:detail",
-                               kwargs={'isbn': queryset.values('isbn').first()['isbn']})
-
 
     def post(self, request, **kwargs):
-        isbn = self.queryset.values('isbn').first()['isbn']
-        request.POST = request.POST.copy()
-        if 'quote' in request.POST:
-            book = Books.objects.get(isbn=isbn)
-            quote = Quotes.objects.create(quote=request.POST['quote'], book=book)
-            quote.save()
+        self.object = self.get_object()
+        if 'isbn' in request.POST:
+            isbn = request.POST['isbn']
+        else:
+            isbn = self.get_context_data()['book'].isbn
+        form_quote = QuotesForm(request.POST)
+        if form_quote.is_valid():
+            print("Es invalido")
+            form_quote.instance.book = Books.objects.get(isbn=isbn)
+            form_quote.save()
 
         return super().post(request, **kwargs)
 
+    def get_success_url(self):
+        isbn = self.get_context_data()['book'].isbn
+        return reverse_lazy('libros:detail', kwargs={'isbn': isbn})
 #
-# def detail_update_create(request):
-#     if request.POST:
-#         if 'create_quote' in request.POST:
-#             print('Vamos a crear un quote')
-#             pass
-#         if 'update_review' in request.POST:
-#             print('Vamos hacer update')
-#             pass
-#     else:
-#         form1 = QuotesForm()
+

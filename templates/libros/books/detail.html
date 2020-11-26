@@ -1,43 +1,44 @@
-
 {% include "base.html" %}
 
 
 {% block content %}
-<ul>
+    <ul>
 
-    <li>{{ book.titulo }}</li>
-    <li>{{ book.author.all.first }}</li>
-    <li>{{ book.isbn }}</li>
-    <li><img src="{{ book.portada.url }}"/></li>
-    <li>{{ book.edicion1 }}</li>
-    <li>{{ book.editorial }}</li>
-    <li>{{ book.year_of_publication }}</li>
-    <li>{{ book.genre }}</li>
-    <li>{{ book.category }}</li>
-    <li>{{ book.status }}</li>
-    <li>{{ book.quote }}</li>
-    {% for quote in book.quotes_set.all %}
+        <li>{{ book.titulo }}</li>
+        <li>{{ book.author.all.first }}</li>
+        <li>{{ book.isbn }}</li>
+        <li><img src="{{ book.portada.url }}"/></li>
+        <li>{{ book.edicion1 }}</li>
+        <li>{{ book.editorial }}</li>
+        <li>{{ book.year_of_publication }}</li>
+        <li>{{ book.genre }}</li>
+        <li>{{ book.category }}</li>
+        <li>{{ book.status }}</li>
+        {% for quote in book.quotes_set.all %}
+            <form method="POST" action="{% url "libros:delete_quote" %}">
+                {% csrf_token %}
+                <li>
+                    {{ quote.quote }}
+                </li>
+                <input type="hidden" name="redirect" value="{{ book.isbn }}">
+                <button type="submit" name="delete_quote" value="{{ quote.id }}">Delete quote
+                </button>
+            </form>
+        {% endfor %}
         <li>
-            {{ quote.quote }}
-        </li>
-    {% endfor %}
-    <li>
-        <form method="POST">
-            {% csrf_token %}
-            {% for field in book.create_quote %}
-                {{ field }}
-            {% endfor %}
-            <textarea name="quote">
+            <form method="POST" name="quote_form">
+                {% csrf_token %}
+                <textarea name="quote">
+
                 </textarea>
+                <button type="submit" name="isbn" value="{{ book.isbn }}">Create Quote</button>
+            </form>
 
-            <button type="submit" name="isbn" value="{{ book.isbn }}">Create Quote</button>
+        </li>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
         </form>
-
-    </li>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Save">
-    </form>
-</ul>
+    </ul>
 {% endblock %}

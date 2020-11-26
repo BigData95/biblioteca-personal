@@ -37,21 +37,14 @@ STATUS = [
 class Author(models.Model):
     GENDER = [('Meele', 'Man'), ('Feemele', 'Woman')]
     name = models.CharField(unique=True, max_length=50)
-    picture = models.ImageField(upload_to="authores/", blank=True)
+    picture = models.ImageField(upload_to="authores/", blank=True, null=True)
     country = CountryField(default='UN')
     biography = models.TextField(blank=True)
-    gender = models.CharField(max_length=7, choices=GENDER)
+    gender = models.CharField(max_length=7, choices=GENDER, blank=True)
     birth_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return self.name
-
-
-# class Reviews(models.Model):
-#     Author = models.ForeignKey(User, on_delete=models.CASCADE)
-#     review = models.TextField()
-
-
 
 
 class Editorials(models.Model):

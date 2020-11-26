@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from libros.forms import EditorialsForm, AuthoresForm, BookForm
@@ -25,30 +26,16 @@ class BooksCreateView(CreateView, LoginRequiredMixin):
     form_class = BookForm
     success_url = reverse_lazy("libros:home")
 
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        if self.request.POST:
+            contexto['authorForm'] = AuthoresForm(self.request.POST)
+        else:
+            contexto['authorForm'] = AuthoresForm()
+        return contexto
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.profile = self.request.user.profile
         form.save()
         return super().form_valid(form)
-
-
-# @login_required
-# def new_book(request):
-#     if request.method == "POST":
-#         form = BookForm2(request.POST)
-#         if form.is_valid():
-#             form.save(request)
-#             return redirect('libros:home')
-#     else:
-#         form = BookForm2()
-#     return render(request=request,
-#                   template_name='libros/new_book.html',
-#                   context={
-#                       'form': form,
-#                       'user': request.user,
-#                       'profile': request.user.profile
-#                   }
-#                   )
-#
-# class QuoteCreateView(CreateView, LoginRequiredMixin):
-#     form_class = QuotesForm

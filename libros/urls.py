@@ -37,13 +37,14 @@ urlpatterns = [
                        view=delete_views.delete,
                        name="delete"
                        ),
+                  path(route='quote/delete',
+                       view=delete_views.delete_quote,
+                       name='delete_quote'
+                       ),
                   path(route="libros/<str:username>/",
                        view=listing_views.BookList.as_view(),
-                       name="libros"),
-                  # path(route="libros/detail/<slug:isbn>",
-                  #      view=detail_views.BookDetailView.as_view(),
-                  #      name="detail"
-                  #      ),
+                       name="libros"
+                       ),
                   path(route="libros/detail/<slug:isbn>",
                        view=update_views.LibroUpdateView.as_view(),
                        name="detail"
