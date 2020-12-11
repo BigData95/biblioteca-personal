@@ -28,13 +28,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Libraries
+    'dal',
+    'dal_select2',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # Local Apps
     'libros',
     'users',
@@ -128,7 +132,7 @@ STATICFILES_FINDERS = [
 
 # El decorador @login_required utiliza esta url
 LOGIN_URL = '/users/login'
-LOGIN_REDIRECT_URL = '/libros/home'
+LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = LOGIN_URL
 
 MEDIA_URL = '/media/'

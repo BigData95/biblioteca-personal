@@ -21,8 +21,9 @@ class BookList(LoginRequiredMixin, ListView):
 
 class AuthoresList(LoginRequiredMixin, ListView):
     model = Author
-    pass
-
+    template_name = 'libros/authores/list.html'
+    context_object_name = 'author_list'
+    ordering = 'name'
 
 class EditorialsList(ListView, LoginRequiredMixin):
     model = Editorials

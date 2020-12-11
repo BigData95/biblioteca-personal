@@ -60,12 +60,12 @@ class Books(models.Model):
     profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
 
     isbn = models.IntegerField(unique=True, primary_key=True, blank=False)
-    titulo = models.CharField(max_length=50, blank=False)
+    titulo = models.CharField(max_length=50, blank=False, null=False)
     author = models.ManyToManyField(Author)
     portada = models.ImageField(upload_to="books/", blank=True, null=True)
-    edicion = models.IntegerField(blank=True)
+    edicion = models.IntegerField(blank=True, null=True)
 
-    editorial = models.ForeignKey(Editorials, on_delete=models.CASCADE, blank=True)
+    editorial = models.ForeignKey(Editorials, on_delete=models.CASCADE, blank=False)
     year_of_publication = models.IntegerField(blank=True)
 
     genre = models.CharField(choices=CATEGORY, default='Other', max_length=20)
