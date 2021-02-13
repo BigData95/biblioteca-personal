@@ -2,7 +2,7 @@
 from django.conf.urls.static import static
 from django.urls import path, re_path
 from django.conf.urls import url
-from dal import autocomplete
+# from dal import autocomplete
 from libros.models import Author
 
 from Biblioteca import settings

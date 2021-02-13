@@ -23,6 +23,17 @@ SECRET_KEY = 's#y7-t%vko!&(+8ro_k1$*am)8z!m0_a5eh(p_x&7yc(f*l)1&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+SITE_ID = 1
+
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -32,6 +43,13 @@ INSTALLED_APPS = [
     'dal',
     'dal_select2',
 
+    #AllAuth 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'django.contrib.sites',
+    'allauth.socialaccount.providers.google',
+
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # Local Apps
     'libros',
     'users',
@@ -135,21 +154,26 @@ LOGIN_URL = '/users/login'
 LOGIN_REDIRECT_URL = '/home'
 LOGOUT_REDIRECT_URL = LOGIN_URL
 
+SOCIAL_AUTH_LOGIN_REDIRECT_URL='/index'
+ACCOUNT_LOGOUT_REDIRECT_URL=LOGIN_URL
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / "media")
 
 
 
 # Sentry
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+# import sentry_sdk
+# from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn="https://870407e52df2412d9cba298b594f4c1a@o479039.ingest.sentry.io/5522908",
-    integrations=[DjangoIntegration()],
-    traces_sample_rate=1.0,
+# sentry_sdk.init(
+#     dsn="https://870407e52df2412d9cba298b594f4c1a@o479039.ingest.sentry.io/5522908",
+#     integrations=[DjangoIntegration()],
+#     traces_sample_rate=1.0,
 
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+#     # If you wish to associate users to errors (assuming you are using
+#     # django.contrib.auth) you may enable sending PII data.
+#     send_default_pii=True
+# )
+
+

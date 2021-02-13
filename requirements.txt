@@ -1,3 +1,4 @@
-sentry-sdk
 Django~=3.1.2
 django-autocomplete-light
+django-allauth
+Pillow

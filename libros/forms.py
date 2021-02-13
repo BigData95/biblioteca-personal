@@ -4,7 +4,7 @@ from django import forms
 from libros.models import Books, Author, Editorials, Quotes
 from django.forms import formset_factory
 #AutoComplete
-from dal import autocomplete
+# from dal import autocomplete
 
 
 class EditorialsForm(forms.ModelForm):
